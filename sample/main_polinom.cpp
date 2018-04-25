@@ -7,12 +7,6 @@ using namespace std;
 void main()
 {
     
-	/*
-	string s1 = "1+x";
-	Polinom S1(s1);
-	Polinom S2(s1);
-	Polinom S3 = S1 + S2;
-	cout << S3;*/
 	int flag = 1;
 	int k = 0;
 	while (flag == 1)

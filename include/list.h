@@ -196,18 +196,29 @@ void list<T> ::Dellcurrent()
 	{
 		Node<T> * Ptr = Head->Next;
 		Node<T> * Ptrnext = current->Next;
-		if (current == Head->Next)
+		Node<T> * Ptr2 = Head->Next;
+
+		if ((current == Ptr) && (current->Next == Ptr)) //надо сделать список пустым
 		{
-			delete Head->Next;
-			Head->Next = Ptrnext;
-			if (Ptrnext == Head->Next)
-				current = NULL;
-		}
-		else {
-			while (Ptr->Next != current) Ptr = Ptr->Next;
-			Ptr->Next = Ptrnext;
 			delete current;
-			current = Ptr;
+			Head->Next = Head;
+			current = NULL;
+		}
+		else if ((current == Ptr) && (current->Next != Ptr)) //удалить начальный 
+		{
+			while (Ptr2->Next != Head->Next) Ptr2 = Ptr2->Next; // теперь Ptr2 - конец
+			delete current;
+			Head->Next = Ptrnext;
+			current = Ptrnext;
+			Ptr2->Next = Head->Next;
+			
+		}
+		else if (current != Ptr) // удалить не начальный, но конечный или средний
+		{
+		while (Ptr->Next != current) Ptr = Ptr->Next;
+		Ptr->Next = Ptrnext;
+		delete current;
+		current = Ptr;
 		}
 	}
 }
