@@ -2,7 +2,7 @@
 #include "Tables.h"
 
 template <class KeyType, class DataType>
-class TableOrdered: public Table<KeyType, DataType>
+class TableOrdered : public Table<KeyType, DataType>
 {
 public:
 	TableOrdered(int SIZE = MIN_SIZE) : Table<KeyType, DataType>(SIZE) {};
@@ -19,7 +19,7 @@ template <class KeyType, class DataType>
 void TableOrdered <KeyType, DataType> ::Reallocate()
 {
 	int NextSize = (int)(this->MaxSize + 20)*1.65;
-	DataTable <KeyType, DataType> ** NewDT = new DataTable <KeyType,  DataType>*[NextSize];
+	DataTable <KeyType, DataType> ** NewDT = new DataTable <KeyType, DataType>*[NextSize];
 	for (int i = 0; i<this->MaxSize; i++)
 		NewDT[i] = this->DT[i];
 	for (int i = this->MaxSize; i<NextSize; i++)
@@ -32,21 +32,21 @@ void TableOrdered <KeyType, DataType> ::Reallocate()
 template <class KeyType, class DataType>
 int TableOrdered <KeyType, DataType> ::BinarSearch(const KeyType &Key) const  //возвращает индекс (номер строки в таблице)
 {
-	int tail = this->Top-1;
+	int tail = this->Top - 1;
 	int mid = 0;
-		int start = 0;
-		while (start <= tail)
-		{
-			mid = (tail + start) / 2;
-			if ((*(this->DT[mid])).Key < Key)
+	int start = 0;
+	while (start <= tail)
+	{
+		mid = (tail + start) / 2;
+		if ((*(this->DT[mid])).Key < Key)
 			start = mid + 1;
-			else if ((*(this->DT[mid])).Key > Key)
+		else if ((*(this->DT[mid])).Key > Key)
 			tail = mid - 1;
-			else return mid; //new disicion
-		}
-		if (start > tail)
-			mid = start;
-		return mid;
+		else return mid; //new disicion
+	}
+	if (start > tail)
+		mid = start;
+	return mid;
 
 }
 
@@ -55,16 +55,16 @@ void TableOrdered <KeyType, DataType> ::Insert(const KeyType &KT_T, const DataTy
 {
 	int area = BinarSearch(KT_T);
 	int j;
-	if ((this->DT[area]==NULL)||((*(this->DT[area])).Key != KT_T))
+	if ((this->DT[area] == NULL) || ((*(this->DT[area])).Key != KT_T))
 	{
-		if ((double)this->Top/(double)this->MaxSize > 0.7) // перераспределить если до заполнения осталось 30 процентов 
+		if ((double)this->Top / (double)this->MaxSize > 0.7) // перераспределить если до заполнения осталось 30 процентов 
 			Reallocate();
 		for (j = this->Top; j > area; j--)
 			this->DT[j] = this->DT[j - 1];
 		this->DT[j] = new DataTable<KeyType, DataType>(KT_T, DT_D);
 		this->Top++;
 	}
-	else cout << "duplicate key" << endl;
+	else throw "duplicate key";
 }
 
 template <class KeyType, class DataType>
@@ -72,7 +72,7 @@ void  TableOrdered <KeyType, DataType> ::Dell(const KeyType &KT_T)
 {
 	int area = BinarSearch(KT_T);
 
-	if ((this->DT[area]!=NULL)&&((*(this->DT[area])).Key == KT_T))
+	if ((this->DT[area] != NULL) && ((*(this->DT[area])).Key == KT_T))
 	{
 		delete this->DT[area];
 		for (int i = area; i < this->Top; i++)
@@ -80,16 +80,14 @@ void  TableOrdered <KeyType, DataType> ::Dell(const KeyType &KT_T)
 		this->Top -= 1;
 	}
 	else
-		cout<< "element doesn't exist"<<endl;
+		throw "element doesn't exist";
 }
 
 template <class KeyType, class DataType>
- DataTable<KeyType, DataType>* TableOrdered <KeyType, DataType> ::Search(const KeyType &KT_T) const
+DataTable<KeyType, DataType>* TableOrdered <KeyType, DataType> ::Search(const KeyType &KT_T) const
 {
 	int area = BinarSearch(KT_T);
 	if ((*(this->DT[area])).Key == KT_T)
-		//return (*(this->DT[area])).Data;
 		return this->DT[area];
-	else //throw "element doesn't exist";
-		return NULL;
+	else throw "element doesn't exist";
 }

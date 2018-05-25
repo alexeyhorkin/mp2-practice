@@ -16,6 +16,7 @@ int main()
 	cout << "Create table, please enter size of table" << endl;
 	cin >> SIZE;
 	TableUnord<string, Polinom> A(SIZE);
+	string a;
 	TableOrdered<string, Polinom> B(SIZE);
 	HashTable<string, Polinom> C(SIZE);
 
@@ -36,9 +37,12 @@ int main()
 			cout << "Write your Polinom" << endl;
 			cin >> str;
 			Polinom a(str);
-			A.Insert(str, a);
-			B.Insert(str, a);
-			C.Insert(str, a);
+			try { A.Insert(str, a); }
+			catch (...) { cout << "duplicated key" << endl; }
+			try { B.Insert(str, a); }
+			catch (...) { cout << "duplicated key" << endl; }
+			try { C.Insert(str, a); }
+			catch (...) { cout << "duplicated key" << endl; }
 			cout << "Unordered :" << endl;
 			cout << A << endl;
 			cout << "Ordered :" << endl;
@@ -53,9 +57,12 @@ int main()
 			cout << "Write your Polinom" << endl;
 			cin >> str;
 			Polinom a(str);
-			A.Dell(str);
-			B.Dell(str);
-			C.Dell(str);
+			try { A.Dell(str); }
+			catch (...) { cout << "element doesn't exist" << endl; }
+			try { B.Dell(str); }
+			catch (...) { cout << "element doesn't exist" << endl; }
+			try { C.Dell(str); }
+			catch (...) { cout << "element doesn't exist" << endl; }
 			cout << "Unordered :" << endl;
 			cout << A << endl;
 			cout << "Ordered :" << endl;
@@ -70,15 +77,12 @@ int main()
 			cout << "Write your Polinom" << endl;
 			cin >> str;
 			Polinom a(str);
-			if (A.Search(str) == NULL)
-				cout << "Element doesn't exest"<< endl;
-			else cout << " You have found " << A.Search(str)->Data;
-			if (B.Search(str) == NULL)
-				cout << "Element doesn't exest"<<endl;
-			else cout << " You have found " << B.Search(str)->Data;
-			if (C.Search(str) == NULL)
-				cout << "Element doesn't exest"<<endl;
-			else cout << " You have found " << C.Search(str)->Data;
+			try { cout << "finded: " << A.Search(str)->Data; }
+			catch (...) { cout << "element doesn't exist" << endl; }
+			try { cout << "finded: " << B.Search(str)->Data; }
+			catch (...) { cout << "element doesn't exist" << endl; }
+			try { cout << "finded: " << C.Search(str)->Data; }
+			catch (...) { cout << "element doesn't exist" << endl; }
 			break;
 		}
 		case 4:
