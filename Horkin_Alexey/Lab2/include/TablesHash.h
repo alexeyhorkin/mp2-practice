@@ -2,6 +2,7 @@
 #include "Tables.h" 
 #include <string>
 #include <cstdlib> // для рандомма
+#include <cmath>
 using namespace std;
 #define Mark0 0
 #define Mark1 1
@@ -44,7 +45,7 @@ int GetDigKey<string>(const string &k)  // сама реализация хэш функции от string
 template <class KeyType, class DataType>  // хэш функция внутри класса (метод)
 int HashTable<KeyType, DataType>::Hashfunc(const KeyType& k) const
 {
-	int temp = GetDigKey(k);
+	int temp = abs(GetDigKey(k));
 	return (temp % (this->MaxSize));
 }
 

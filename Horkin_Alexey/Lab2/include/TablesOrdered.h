@@ -87,7 +87,7 @@ template <class KeyType, class DataType>
 DataTable<KeyType, DataType>* TableOrdered <KeyType, DataType> ::Search(const KeyType &KT_T) const
 {
 	int area = BinarSearch(KT_T);
-	if ((*(this->DT[area])).Key == KT_T)
+	if ((this->DT[area]!=NULL) && ((*(this->DT[area])).Key == KT_T))
 		return this->DT[area];
 	else throw "element doesn't exist";
 }
